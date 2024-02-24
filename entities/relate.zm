@@ -1,2 +1,5 @@
+query_template = read(_/"relate.cypher") 
 editor = req.header("editor") ?? "anon"
-_ds.graph.update( "<create edge query>" , [ editor ] ) 
+payload = json(req.body)
+edge_query = str( query_template , payload.e1, payload.e2, payload.r )
+_ds.graph.update( edge_query , [ ] ) 

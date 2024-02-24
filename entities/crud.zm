@@ -1,15 +1,19 @@
-import org.apache.commons.jxpath.JXPathContext as JX 
-
+/*
+Handles Entity End points...
+*/
 def entity_create(){
    data = json( req.body )
    entity_id = str( INT(time()) ) 
    data.id = my_id
    data["_editor_"] = editor
    _ds.storage.dump( bucket, entity_id , data )
-   _ds.graph.update( "<insert query>" , [ entity_id , editor ] )  
+   query_template = read(_/"insert.cypher")
+   insert_query = str(query_template, str("%s:%s", entity_class, entity_id) )
+   _ds.graph.update( insert_query , [] )  
 }
 
 def entity_update(){
+  import org.apache.commons.jxpath.JXPathContext as JX 
   cur_obj = _ds.storage.load( bucket, entity_id )
   ctx = JX.newContext(cur_obj)
   delta_pairs = json( req.body )
@@ -17,8 +21,7 @@ def entity_update(){
     ctx.setValue( entry.key, entry.value )
   }
   data["_editor_"] = editor
-  _ds.storage.dump( bucket, entity_id , data )
-  _ds.graph.update( "<insert query>" , [ entity_id , editor ] ) 
+  _ds.storage.dump( bucket, entity_id , data ) 
 }
 
 def entity_read(){ _ds.storage.loads( bucket, entity_id )  }
