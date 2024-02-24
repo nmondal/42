@@ -29,6 +29,8 @@ the entity about:
 2. Class ( what type of business entity )
 3. Random ID that is unique within the Org,Class  
 
+This can be found in [entities](entities) folder.
+
 #### Graph Storage 
 
 Neo4j. Stores the unique id for the entity, and minimal properties.
@@ -48,6 +50,8 @@ Special fields are
 
 Entire system starts from random business API calls - which produces `events` which needs to be pushed, 
 and consumed. A RAMA system is put into place for this reason.
+
+This can be found in [events](events) folder.
 
 #### RAMA Publish
 
@@ -70,7 +74,10 @@ This would require custom coding based on the `class/type` of event, hence each 
 Thus, it is natural to have RAMA events such that each `class` gets a different topic.
 
 ### Business API Layer
-This is the external facing API system whic when triggered 
+This is the external facing API system whic when triggered.
+
+This can be found in [business](business) folder.
+
 
 1. Generate events in the system
 2. Optionally does CRUD using the `Entity` storage APIs.
