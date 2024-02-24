@@ -1,0 +1,14 @@
+{
+    "type-a" : {
+        "bucket" : "type-a",
+        "db-cols" : [ ]
+    },
+    "type-b" : {
+        "bucket" : "type-b",
+        "db-cols" : [ ]
+    },
+    "type-c" : {
+        "bucket" : "type-c",
+        "db-cols" : [ ]
+    }
+}

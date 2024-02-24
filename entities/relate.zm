@@ -1,0 +1,2 @@
+editor = req.header("editor") ?? "anon"
+_ds.graph.update( "<create edge query>" , [ editor ] ) 

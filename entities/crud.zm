@@ -1,0 +1,37 @@
+import org.apache.commons.jxpath.JXPathContext as JX 
+
+def entity_create(){
+   data = json( req.body )
+   entity_id = str( INT(time()) ) 
+   data.id = my_id
+   data["_editor_"] = editor
+   _ds.storage.dump( bucket, entity_id , data )
+   _ds.graph.update( "<insert query>" , [ entity_id , editor ] )  
+}
+
+def entity_update(){
+  cur_obj = _ds.storage.load( bucket, entity_id )
+  ctx = JX.newContext(cur_obj)
+  delta_pairs = json( req.body )
+  for ( entry : delta_pairs.entries ){
+    ctx.setValue( entry.key, entry.value )
+  }
+  data["_editor_"] = editor
+  _ds.storage.dump( bucket, entity_id , data )
+  _ds.graph.update( "<insert query>" , [ entity_id , editor ] ) 
+}
+
+def entity_read(){ _ds.storage.loads( bucket, entity_id )  }
+
+editor = req.header("editor") ?? "anon"
+entity_class = req.params("class")
+entity_id = req.params("id") ?? ""
+bucket = _shared[entity_class]
+
+verb = req.requestMethod().toLowerCase()
+
+switch( verb ){
+    case "get" :    entity_read()
+    case "put" :    entity_create()
+    case "post" :   entity_update()
+}
