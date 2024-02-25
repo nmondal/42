@@ -1,3 +1,3 @@
-MATCH (a:Entity), (b:Entity) WHERE a.urn = "%s" AND b.urn = "%s" 
-CREATE (a)-[r:%s]->(b)  
+MATCH (a:Entity), (b:Entity) WHERE a.urn = '${1}' AND b.urn = '${2}' 
+CREATE (a)-[r:%s { startTime: datetime(), endTime: null } ]->(b)  
 RETURN a,b 

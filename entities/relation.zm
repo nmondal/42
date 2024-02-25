@@ -1,0 +1,11 @@
+cp = req.contextPath
+if ( cp == "/relate"){
+    query_template = read(_/"relate.cypher") 
+} else {
+    query_template = read(_/"unrelate.cypher")
+}
+
+editor = req.header("editor") ?? "anon"
+payload = json(req.body)
+// TODO pass relationship parameters to the mix 
+_ds.graph.update( query_template , [ payload.entity[0], payload.entity[1], payload.relation ] ) 

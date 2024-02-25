@@ -16,7 +16,8 @@ routes:
 
   post:
     /entity/:class/:id : _/crud.zm
-    /relate: _/relate.zm 
+    /relate: _/relation.zm
+    /unrelate:  _/relation.zm
 
   get:
     /entity/:class/:id : _/crud.zm
@@ -44,4 +45,10 @@ data-sources:
     type: jdbc
     driver: "org.neo4j.jdbc.bolt.BoltDriver"
     connection : "jdbc:neo4j:bolt+routing://<host>:<port>/"
-    
+
+cron:
+  # creates buckets if not created already , for prod, create bucket before hand
+  boot-configure:
+    exec: _/cron.zm
+    boot: true
+    at: "0 0 0 1 1 ? 2100"
