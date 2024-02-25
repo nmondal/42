@@ -1,0 +1,32 @@
+#####################
+# Defines the Schemas for routes
+# https://json-schema.org/learn/miscellaneous-examples.html
+#####################
+labels:
+  ok:  "resp.status == 200"
+
+verify:
+  in: true
+  out: true
+
+routes:
+
+  /entity/*:
+    put:
+      in: EntityProperties.json
+      ok: Urn.json
+    post:
+      in: EntityUpdate.json
+      ok: Urn.json
+    get:
+      ok: Entity.json
+  
+  /relate:
+    post: 
+      in: Relation.json
+      ok: Urn.json
+  
+  /unrelate:
+    post: 
+      in: Relation.json
+      ok: Urn.json
