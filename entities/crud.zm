@@ -8,7 +8,9 @@ def bucket_and_id(){
 
 def entity_read(){
     #(bucket, entity_id) = bucket_and_id()
-    _ds.storage.loads( bucket, entity_id ) // this itself should do it
+    js = _ds.storage.loads( bucket, entity_id ) // this itself should do it
+    panic( empty(js), jstr( {"success" : false, "entity does not exist!" } ), 404  )
+    js // return
 }
 
 def entity_create(){
@@ -26,8 +28,10 @@ def entity_create(){
 
 def entity_update(){
    #(bucket, entity_id) = bucket_and_id()
-   import org.apache.commons.jxpath.JXPathContext as JX
    cur_obj = _ds.storage.load( bucket, entity_id )
+   panic( empty(cur_obj), jstr( {"success" : false, "entity does not exist!" } ), 404  )
+   // Now do the rest
+   import org.apache.commons.jxpath.JXPathContext as JX
    ctx = JX.newContext(cur_obj)
    data = req.attribute("_body") ?? json(req.body)
    for ( entry : data.apply.entries ){ ctx.setValue( entry.key, entry.value ) }
@@ -35,8 +39,8 @@ def entity_update(){
    jstr( { "urn" : data.urn } ) // TODO get the version revision too
 }
 
-switch( req.requestMethod().toLowerCase() ){
-    case "get" :  entity_read()
-    case "put" :  entity_create()
-    case "post" : entity_update()
+switch( req.requestMethod() ){
+    case "GET" :  entity_read()
+    case "PUT" :  entity_create()
+    case "POST" : entity_update()
 }
