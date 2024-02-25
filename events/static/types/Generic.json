@@ -1,0 +1,13 @@
+{
+    "$id": "https://42.cowj/Generic.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Schema for Generic OK/Failure",
+    "title": "Generic",
+    "type": "object",
+    "properties": {
+      "status": { "type": "boolean" },
+      "message" : {"type": "string" }
+    },
+    "required": ["status"],
+    "additionalProperties": true
+}

@@ -1,0 +1,8 @@
+/* Handle events */
+
+event_type = req.params("class")
+assert( event_type @ _shared["CONFIG"], jstr( {"success" : false, "message" : "event-class is not configured!" } ), 404 )
+em = _ds.rama.put( _shared["CONFIG"][event_type]["topic"],  req.body() )
+panic( em.inError , jstr( {"success" : false, "message" : "Write Failed with Event Bus!" } ), 424 )
+jstr( {"success" : true, "message" : "ok" } )
+

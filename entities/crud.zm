@@ -2,20 +2,20 @@
 def bucket_and_id(){
     entity_urn = req.params("id")
     #(entity_class, entity_id) = entity_urn.split(":")
-    assert( entity_class @ _shared["CONFIG"], jstr( {"success" : false, "entity-class is not configured!" } ), 404 )
+    assert( entity_class @ _shared["CONFIG"], jstr( {"success" : false, "message" : "entity-class is not configured!" } ), 404 )
     [ _shared["CONFIG"][entity_class]["bucket"], entity_id ]
 }
 
 def entity_read(){
     #(bucket, entity_id) = bucket_and_id()
     js = _ds.storage.loads( bucket, entity_id ) // this itself should do it
-    panic( empty(js), jstr( {"success" : false, "entity does not exist!" } ), 404  )
+    panic( empty(js), jstr( {"success" : false, "message" : "entity does not exist!" } ), 404  )
     js // return
 }
 
 def entity_create(){
    entity_class = req.params("class")
-   assert( entity_class @ _shared["CONFIG"], jstr( {"success" : false, "entity-class is not configured!" } ), 404 )
+   assert( entity_class @ _shared["CONFIG"], jstr( {"success" : false, "message" : "entity-class is not configured!" } ), 404 )
    bucket = _shared["CONFIG"][entity_class]["bucket"]
    data = req.attribute("_body") ?? json(req.body)
    entity_id = str( INT(time()) , 62 ) // base 62 encoding
@@ -32,7 +32,7 @@ def entity_create(){
 def entity_update(){
    #(bucket, entity_id) = bucket_and_id()
    cur_obj = _ds.storage.load( bucket, entity_id )
-   panic( empty(cur_obj), jstr( {"success" : false, "entity does not exist!" } ), 404  )
+   panic( empty(cur_obj), jstr( {"success" : false, "message" : "entity does not exist!" } ), 404  )
    // Now do the rest
    import org.apache.commons.jxpath.JXPathContext as JX
    ctx = JX.newContext(cur_obj)
