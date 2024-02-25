@@ -20,9 +20,12 @@ def entity_create(){
    data = req.attribute("_body") ?? json(req.body)
    entity_id = str( INT(time()) , 62 ) // base 62 encoding
    data.urn = entity_class + ":" + entity_id
-   _ds.storage.dump( bucket, entity_id , data )
    query_template = _shared["CREATE"]
-   _ds.graph.update( query_template , [ data.urn ] )
+   // this is unreliable
+   em = _ds.graph.update( query_template , [ data.urn ] )
+   panic( em.inError, jstr( { "status" : false, "message" : em.error().getMessage() } ) , 424 )
+   // this is reliable so do it in the end
+   _ds.storage.dump( bucket, entity_id , data )
    jstr( { "urn" : data.urn } ) // this is Golden enough
 }
 
