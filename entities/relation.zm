@@ -1,6 +1,14 @@
+/*
+Ideally, best alternative should have been editing and removing via ID
+But - https://github.com/neo4j/neo4j/issues/3064
+Creates a problem, hence this is what it is
+*/
 query_template =  (req.contextPath == "/relate" ) ? _shared["RELATE"] : _shared["UNRELATE"]
-
-editor = req.header("editor") ?? "anon"
-payload = json(req.body)
+relation_name = req.params("relation")
+relation = req.attribute("_body") ?? json(req.body)
 // TODO pass relationship parameters to the mix 
-_ds.graph.update( query_template , [ payload.entity[0], payload.entity[1], payload.relation ] ) 
+em = _ds.graph.update( query_template , [ relation.entity[0], relation.entity[1], relation_name ] )
+result = { "status" : em.isSuccessful() }
+result["message"] = em.isSuccessful() ? "ok" : em.error().getMessage()
+panic( em.inError, jstr( result ) , 406 )
+result // return 

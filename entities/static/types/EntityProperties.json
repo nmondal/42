@@ -1,5 +1,5 @@
 {
-    "$id": "https://cowj/EntityProperties.schema.json",
+    "$id": "https://42.cowj/EntityProperties.schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "Schema for EntityProperties",
     "title": "EntityProperties",

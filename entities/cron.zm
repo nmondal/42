@@ -4,7 +4,7 @@ config = json(_/"config.json")
 for ( bucket : xpath( config, "//bucket" ) ){ _ds.storage.createBucket( bucket, "", false ) }
 // put it here 
 _shared["CONFIG"] = config // done populating 
-_shared["CREATE"] = read( _/"insert.cypher" )
+_shared["CREATE"] = read( _/"cypher/insert.cypher" )
 //_shared["UPDATE"] = read( _/"insert.cypher" ) TODO 
-_shared["RELATE"] = read( _/"relate.cypher" )
-_shared["UNRELATE"] = read( _/"unrelate.cypher" )
+_shared["RELATE"] = read( _/"cypher/relate.cypher" )
+_shared["UNRELATE"] = read( _/"cypher/unrelate.cypher" )

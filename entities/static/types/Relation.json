@@ -1,12 +1,11 @@
 {
-    "$id": "https://cowj/Relation.schema.json",
+    "$id": "https://42.cowj/Relation.schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "Schema for Entity Relation",
     "title": "Relation",
     "type": "object",
     "properties": {
-       "name": { "type" : "string" },
-       "entities": { 
+       "entities": {
         "type" : "array",
         "items" : {
           "type" : "string",

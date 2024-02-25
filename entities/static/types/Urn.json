@@ -1,5 +1,5 @@
 {
-    "$id": "https://cowj/Urn.schema.json",
+    "$id": "https://42.cowj/Urn.schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "Schema for Entity URN",
     "title": "Urn",

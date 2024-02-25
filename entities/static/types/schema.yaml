@@ -4,6 +4,7 @@
 #####################
 labels:
   ok:  "resp.status == 200"
+  err: "resp.status != 200"
 
 verify:
   in: true
@@ -15,18 +16,25 @@ routes:
     put:
       in: EntityProperties.json
       ok: Urn.json
+      err: Generic.json
+    
     post:
       in: EntityUpdate.json
       ok: Urn.json
+      err: Generic.json 
+    
     get:
       ok: Entity.json
+      err: Generic.json
   
   /relate:
     post: 
       in: Relation.json
-      ok: Urn.json
-  
+      ok: Generic.json
+      err: Generic.json
+
   /unrelate:
     post: 
       in: Relation.json
-      ok: Urn.json
+      ok: Generic.json
+      err: Generic.json

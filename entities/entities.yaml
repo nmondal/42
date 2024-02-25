@@ -1,5 +1,7 @@
 #############################################
 # Entity End Point for CRUD Ops
+# https://github.com/neo4j/neo4j/issues/3064
+# Relationship by ID might be an issue - hence this design
 ##############################################
 
 port: 4201
@@ -12,12 +14,12 @@ threading:
 routes:
   
   put:
-    /entity/:class : _/crud.zm 
+    /entity/:class : _/crud.zm
 
   post:
-    /entity/:class/:id : _/crud.zm
-    /relate: _/relation.zm
-    /unrelate:  _/relation.zm
+    /entity/:class/:id :  _/crud.zm
+    /relate/:relation  :  _/relation.zm
+    /unrelate/:relation:  _/relation.zm
 
   get:
     /entity/:class/:id : _/crud.zm

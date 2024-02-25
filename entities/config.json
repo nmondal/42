@@ -1,4 +1,8 @@
 {
+    "rel" : {
+        "bucket" : "relations", 
+        "db-cols" : []
+    },
     "type-a" : {
         "bucket" : "type-a",
         "db-cols" : [ ]
