@@ -1,9 +1,4 @@
-cp = req.contextPath
-if ( cp == "/relate"){
-    query_template = read(_/"relate.cypher") 
-} else {
-    query_template = read(_/"unrelate.cypher")
-}
+query_template =  (req.contextPath == "/relate" ) ? _shared["RELATE"] : _shared["UNRELATE"]
 
 editor = req.header("editor") ?? "anon"
 payload = json(req.body)

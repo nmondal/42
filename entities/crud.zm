@@ -7,7 +7,7 @@ def entity_create(){
    data.id = my_id
    data["_editor_"] = editor
    _ds.storage.dump( bucket, entity_id , data )
-   query_template = read(_/"insert.cypher")
+   query_template = _shared["CREATE"]
    insert_query = str(query_template, str("%s:%s", entity_class, entity_id) )
    _ds.graph.update( insert_query , [] )  
 }
@@ -29,7 +29,7 @@ def entity_read(){ _ds.storage.loads( bucket, entity_id )  }
 editor = req.header("editor") ?? "anon"
 entity_class = req.params("class")
 entity_id = req.params("id") ?? ""
-bucket = _shared[entity_class]
+bucket = _shared["config"][entity_class] ?? panic(true, "no mapped bucket for the entity class!" , 404 )
 
 verb = req.requestMethod().toLowerCase()
 

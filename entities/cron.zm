@@ -1,0 +1,10 @@
+// Loads the configurations and keeps it handy 
+config = json(_/"config.json")
+// optional - create buckets TODO 
+for ( bucket : xpath( config, "//bucket" ) ){ _ds.storage.createBucket( bucket, "", false ) }
+// put it here 
+_shared["CONFIG"] = config // done populating 
+_shared["CREATE"] = read( _/"insert.cypher" )
+//_shared["UPDATE"] = read( _/"insert.cypher" ) TODO 
+_shared["RELATE"] = read( _/"relate.cypher" )
+_shared["UNRELATE"] = read( _/"unrelate.cypher" )
