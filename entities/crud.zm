@@ -1,40 +1,42 @@
-/*
-Handles Entity End points...
-*/
+/* Entity End Point Handling */
+def bucket_and_id(){
+    entity_urn = req.params("id")
+    #(entity_class, entity_id) = entity_urn.split(":")
+    assert( entity_class @ _shared["CONFIG"], jstr( {"success" : false, "entity-class is not configured!" } ), 404 )
+    [ _shared["CONFIG"][entity_class]["bucket"], entity_id ]
+}
+
+def entity_read(){
+    #(bucket, entity_id) = bucket_and_id()
+    _ds.storage.loads( bucket, entity_id ) // this itself should do it
+}
+
 def entity_create(){
-   data = json( req.body )
-   entity_id = str( INT(time()) ) 
-   data.id = my_id
-   data["_editor_"] = editor
+   entity_class = req.params("class")
+   assert( entity_class @ _shared["CONFIG"], jstr( {"success" : false, "entity-class is not configured!" } ), 404 )
+   bucket = _shared["CONFIG"][entity_class]["bucket"]
+   data = req.attribute("_body") ?? json(req.body)
+   entity_id = str( INT(time()) , 62 ) // base 62 encoding
+   data.urn = entity_class + ":" + entity_id
    _ds.storage.dump( bucket, entity_id , data )
    query_template = _shared["CREATE"]
-   insert_query = str(query_template, str("%s:%s", entity_class, entity_id) )
-   _ds.graph.update( insert_query , [] )  
+   _ds.graph.update( query_template , [ data.urn ] )
+   jstr( { "urn" : data.urn } ) // this is Golden enough
 }
 
 def entity_update(){
-  import org.apache.commons.jxpath.JXPathContext as JX 
-  cur_obj = _ds.storage.load( bucket, entity_id )
-  ctx = JX.newContext(cur_obj)
-  delta_pairs = json( req.body )
-  for ( entry : delta_pairs.entries ){
-    ctx.setValue( entry.key, entry.value )
-  }
-  data["_editor_"] = editor
-  _ds.storage.dump( bucket, entity_id , data ) 
+   #(bucket, entity_id) = bucket_and_id()
+   import org.apache.commons.jxpath.JXPathContext as JX
+   cur_obj = _ds.storage.load( bucket, entity_id )
+   ctx = JX.newContext(cur_obj)
+   data = req.attribute("_body") ?? json(req.body)
+   for ( entry : data.apply.entries ){ ctx.setValue( entry.key, entry.value ) }
+   _ds.storage.dump( bucket, entity_id , data )
+   jstr( { "urn" : data.urn } ) // TODO get the version revision too
 }
 
-def entity_read(){ _ds.storage.loads( bucket, entity_id )  }
-
-editor = req.header("editor") ?? "anon"
-entity_class = req.params("class")
-entity_id = req.params("id") ?? ""
-bucket = _shared["config"][entity_class] ?? panic(true, "no mapped bucket for the entity class!" , 404 )
-
-verb = req.requestMethod().toLowerCase()
-
-switch( verb ){
-    case "get" :    entity_read()
-    case "put" :    entity_create()
-    case "post" :   entity_update()
+switch( req.requestMethod().toLowerCase() ){
+    case "get" :  entity_read()
+    case "put" :  entity_create()
+    case "post" : entity_update()
 }

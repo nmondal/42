@@ -17,12 +17,12 @@ routes:
     /entity/:class : _/crud.zm
 
   post:
-    /entity/:class/:id :  _/crud.zm
+    /entity/:id :  _/crud.zm
     /relate/:relation  :  _/relation.zm
     /unrelate/:relation:  _/relation.zm
 
   get:
-    /entity/:class/:id : _/crud.zm
+    /entity/:id : _/crud.zm
 
 plugins:
   cowj.plugins:
