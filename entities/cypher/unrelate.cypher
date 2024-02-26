@@ -1,2 +1,2 @@
-MATCH (a {urn:"${1}"})-[r:${3}]-(b {urn:"${2}"})
+MATCH (a {urn:'${e1}'})-[r:${name}]-(b {urn:'${e2}'})
 SET r.endTime = datetime()

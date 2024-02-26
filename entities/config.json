@@ -3,16 +3,16 @@
         "bucket" : "relations", 
         "db-cols" : []
     },
-    "type-a" : {
-        "bucket" : "type-a",
+    "a" : {
+        "bucket" : "A",
         "db-cols" : [ ]
     },
-    "type-b" : {
-        "bucket" : "type-b",
+    "b" : {
+        "bucket" : "B",
         "db-cols" : [ ]
     },
-    "type-c" : {
-        "bucket" : "type-c",
+    "c" : {
+        "bucket" : "C",
         "db-cols" : [ ]
     }
 }

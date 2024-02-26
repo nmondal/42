@@ -1,1 +1,1 @@
-MERGE (e:Entity{urn: '${1}'})
+MERGE (e:${entity_class}{urn: '${urn}'})
