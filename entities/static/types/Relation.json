@@ -1,13 +1,14 @@
 {
-    "$id": "https://42.cowj/Relation.schema.json",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "description": "Schema for Entity Relation, Relates one entity to another",
-    "title": "Relation",
-    "type": "array",
-  "items" : {
-    "type" : "string",
-    "pattern": "^[a-zA-Z]+\\:[a-zA-Z0-9]+$",
-    "minItems": 2,
-    "maxItems": 2
-    }
-  }
+  "$id": "https://42.cowj/Relation.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Schema for Entity Relation",
+  "title": "Relation",
+  "type": "object",
+  "properties": {
+    "author": { "type" : "string" , "pattern": "^[a-zA-Z]+\\:[a-zA-Z0-9]+$" },
+    "src" :   { "type" : "string" , "pattern": "^[a-zA-Z]+\\:[a-zA-Z0-9]+$" },
+    "dst" :   { "type" : "string" , "pattern": "^[a-zA-Z]+\\:[a-zA-Z0-9]+$" }
+  },
+  "required": [ "author", "src" , "dst" ],
+  "additionalProperties": false
+}

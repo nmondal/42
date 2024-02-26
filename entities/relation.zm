@@ -4,17 +4,19 @@ But - https://github.com/neo4j/neo4j/issues/3064
 Creates a problem, hence this is what it is
 */
 RELATION_CONFIG = _shared["RELATIONS"]
+RELATION_BUCKET = "relations"
 // now proceed
 query_template =  ( req.pathInfo #^ "/relate/" ) ? _shared["RELATE"] : _shared["UNRELATE"]
 relation_name = req.params("relation")
 assert ( relation_name @ RELATION_CONFIG, jstr( { "status" : false, "message" : "relationship type is not configured!" } ), 404 )
-entities = req.attribute("_body") ?? json(req.body)
-assert ( size(entities) == 2 , jstr( { "status" : false, "message" : "relationship must have exactly 2 entities!" } ), 422 )
+payload = req.attribute("_body") ?? json(req.body)
 
-// TODO pass relationship parameters to the mix 
-params = { "e1" : entities[0] , "e2" : entities[1], "relation_name" : relation_name }
+params = { "e1" : payload.src , "e2" : payload.dst , "relation_name" : relation_name }
 em = _ds.graph.update( query_template , params )
 result = { "status" : em.isSuccessful() }
 result["message"] = em.isSuccessful() ? "ok" : em.error().getMessage()
 panic( em.inError, jstr( result ) , 406 )
-result // return 
+relation_urn = str( "%s-%s-%s", payload.src, relation_name, payload.dst )
+// just store author-ship
+_ds.storage.dump( RELATION_BUCKET, relation_urn, { "author": payload.author } )
+result // return

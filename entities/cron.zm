@@ -6,6 +6,10 @@ for ( entity_class : config.entities.keys ){
   _log.info("For {} Creating bucket {}", entity_class, entity_config.bucket )
   _ds.storage.createBucket( entity_config.bucket, "dummy!", false )
 }
+// one bucket for relations
+_log.info("Creating bucket for relations!" )
+_ds.storage.createBucket( "relations", "dummy!", false )
+
 // put it here 
 _shared["ENTITIES"] = config.entities ?? {:} // done populating
 _shared["RELATIONS"] = config.relations ?? {:} // done populating
