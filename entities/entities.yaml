@@ -48,7 +48,8 @@ data-sources:
   graph:
     type: jdbc
     driver: "org.neo4j.jdbc.bolt.BoltDriver"
-    connection : "jdbc:neo4j:bolt+routing://<host>:<port>/"
+    # we expect to change that when you are in prod mode
+    connection : "jdbc:neo4j:bolt://localhost:7687/?user=neo4j&password=#!FooBar"
 
 cron:
   # creates buckets if not created already , for prod, create bucket before hand
