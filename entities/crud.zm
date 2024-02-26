@@ -1,9 +1,11 @@
 /* Entity End Point Handling */
+ENTITY_CONFIG = _shared["ENTITIES"]
+
 def bucket_and_id(){
     entity_urn = req.params("id")
     #(entity_class, entity_id) = entity_urn.split(":")
-    assert( entity_class @ _shared["CONFIG"], jstr( {"success" : false, "message" : "entity-class is not configured!" } ), 404 )
-    [ _shared["CONFIG"][entity_class]["bucket"], entity_id ]
+    assert( entity_class @ ENTITY_CONFIG, jstr( {"success" : false, "message" : "entity-class is not configured!" } ), 404 )
+    [ ENTITY_CONFIG[entity_class]["bucket"], entity_id ]
 }
 
 def entity_read(){
@@ -15,8 +17,8 @@ def entity_read(){
 
 def entity_create(){
    entity_class = req.params("class")
-   assert( entity_class @ _shared["CONFIG"], jstr( {"success" : false, "message" : "entity-class is not configured!" } ), 404 )
-   bucket = _shared["CONFIG"][entity_class]["bucket"]
+   assert( entity_class @ ENTITY_CONFIG, jstr( {"success" : false, "message" : "entity-class is not configured!" } ), 404 )
+   bucket = ENTITY_CONFIG[entity_class]["bucket"]
    data = req.attribute("_body") ?? json(req.body)
    entity_id = str( INT(time()) , 62 ) // base 62 encoding
    data.urn = entity_class + ":" + entity_id

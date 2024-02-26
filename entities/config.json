@@ -1,18 +1,27 @@
 {
-    "rel" : {
-        "bucket" : "relations", 
-        "db-cols" : []
+    "entities" : {
+        "a": {
+            "$description" : "",
+            "bucket": "A",
+            "db-cols": []
+        },
+        "b": {
+            "$description" : "",
+            "bucket": "B",
+            "db-cols": []
+        },
+        "c": {
+            "$description" : "",
+            "bucket": "C",
+            "db-cols": []
+        }
     },
-    "a" : {
-        "bucket" : "A",
-        "db-cols" : [ ]
-    },
-    "b" : {
-        "bucket" : "B",
-        "db-cols" : [ ]
-    },
-    "c" : {
-        "bucket" : "C",
-        "db-cols" : [ ]
+    "relations" : {
+        "r1" : {
+            "$description" : ""
+        },
+        "r2" : {
+            "$description" : ""
+        }
     }
 }
