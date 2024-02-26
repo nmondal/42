@@ -3,6 +3,10 @@
 > Event Bus Driven Final Answer to Life, Universe and Everything that is ERP Basis using RAMA and Cowj
 Hence 42.
 
+## How to Run?
+1. Run the gradle file to create the `jar-lib` folder 
+2. Issue the command cowj with ` --add-opens java.base/jdk.internal.loader=ALL-UNNAMED and ` 
+
 ## Uber Design 
 
 Business API are essentialy:

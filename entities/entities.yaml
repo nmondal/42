@@ -6,6 +6,8 @@
 
 port: 4201
 
+lib: _/../jar-lib
+
 threading:
   min: 4
   max : 8

@@ -1,7 +1,11 @@
 // Loads the configurations and keeps it handy 
-config = json(_/"config.json")
+config = json(_/"config.json",true)
 // optional - create buckets TODO 
-for ( bucket : xpath( config, "//bucket" ) ){ _ds.storage.createBucket( bucket, "", false ) }
+for ( entity_class : config.keys ){
+  entity_config = config[entity_class]
+  _log.info("For {} Creating bucket {}", entity_class, entity_config.bucket )
+  _ds.storage.createBucket( entity_config.bucket, "dummy!", false )
+}
 // put it here 
 _shared["CONFIG"] = config // done populating 
 _shared["CREATE"] = read( _/"cypher/insert.cypher" )

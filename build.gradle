@@ -1,0 +1,42 @@
+/*
+* This is how one can import all libraries into a folder
+* */
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    /// Add your dependencies here
+    // https://mvnrepository.com/artifact/org.neo4j/neo4j-jdbc-driver
+    implementation 'org.neo4j:neo4j-jdbc-driver:4.0.10'
+
+}
+
+// Apply a specific Java toolchain to ease working on different environments.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
+}
+
+tasks.register('copyAllDependencies', Copy) {
+    from configurations.runtimeClasspath
+    into "${rootDir}/jar-lib"
+}
+build.dependsOn(copyAllDependencies)
+
+tasks.register('deleteLibs') {
+    delete "${rootDir}/jar-lib"
+    println("libs deleted")
+}
+
+build.dependsOn deleteLibs
