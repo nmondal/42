@@ -27,13 +27,13 @@ routes:
       ok: Entity.json
       err: Generic.json
   
-  /relate:
+  /relate/*:
     post: 
       in: Relation.json
       ok: Generic.json
       err: Generic.json
 
-  /unrelate:
+  /unrelate/*:
     post: 
       in: Relation.json
       ok: Generic.json

@@ -3,11 +3,17 @@ Ideally, best alternative should have been editing and removing via ID
 But - https://github.com/neo4j/neo4j/issues/3064
 Creates a problem, hence this is what it is
 */
-query_template =  (req.contextPath == "/relate" ) ? _shared["RELATE"] : _shared["UNRELATE"]
+RELATION_CONFIG = _shared["RELATIONS"]
+// now proceed
+query_template =  ( req.pathInfo #^ "/relate/" ) ? _shared["RELATE"] : _shared["UNRELATE"]
 relation_name = req.params("relation")
-relation = req.attribute("_body") ?? json(req.body)
+assert ( relation_name @ RELATION_CONFIG, jstr( { "status" : false, "message" : "relationship type is not configured!" } ), 404 )
+entities = req.attribute("_body") ?? json(req.body)
+assert ( size(entities) == 2 , jstr( { "status" : false, "message" : "relationship must have exactly 2 entities!" } ), 422 )
+
 // TODO pass relationship parameters to the mix 
-em = _ds.graph.update( query_template , [ relation.entity[0], relation.entity[1], relation_name ] )
+params = { "e1" : entities[0] , "e2" : entities[1], "relation_name" : relation_name }
+em = _ds.graph.update( query_template , params )
 result = { "status" : em.isSuccessful() }
 result["message"] = em.isSuccessful() ? "ok" : em.error().getMessage()
 panic( em.inError, jstr( result ) , 406 )
