@@ -35,14 +35,15 @@ def entity_create(){
 def entity_update(){
    #(bucket, entity_id) = bucket_and_id()
    cur_obj = _ds.storage.load( bucket, entity_id )
+   println( type(cur_obj) )
    panic( empty(cur_obj), jstr( {"success" : false, "message" : "entity does not exist!" } ), 404  )
    // Now do the rest
    import org.apache.commons.jxpath.JXPathContext as JX
    ctx = JX.newContext(cur_obj)
-   data = req.attribute("_body") ?? json(req.body)
-   for ( entry : data.apply.entries ){ ctx.setValue( entry.key, entry.value ) }
-   _ds.storage.dump( bucket, entity_id , data )
-   jstr( { "urn" : data.urn } ) // TODO get the version revision too
+   apply_data = req.attribute("_body") ?? json(req.body)
+   for ( entry : apply_data.apply.entries ){ ctx.setValue( entry.key, entry.value ) }
+   _ds.storage.dump( bucket, entity_id ,cur_obj)
+   jstr( { "urn" : cur_obj.urn } ) // TODO get the version revision too
 }
 
 switch( req.requestMethod() ){
