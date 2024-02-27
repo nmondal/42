@@ -1,1 +1,16 @@
 // the main RAMA event processor
+import _/"evt_1" as P1
+import _/"evt_2" as P2
+handlers = [ P1, P2 ]
+MAX_THREAD = size(handlers)
+cur_time = time()
+last_min = cur_time + "PT-60S" // subtract 60 sec from current
+dir_prefix = str( last_min , "yyyy/MM/dd/HH/mm") // so, consume last minute
+all_tasks = list ( [0:MAX_THREAD] ) as {
+    current_handler = handlers[$.o].process_event
+    task( time_stamp = dir_prefix, handler = current_handler ) as {
+        handler( time_stamp )
+    }
+}
+batch( all_tasks )
+
