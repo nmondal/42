@@ -1,0 +1,9 @@
+// Loads the configurations and keeps it handy
+config = json(_/"config.json",true)
+for ( event_class : config.keys ){
+  event_config = config[event_class]
+  _log.info("For {} Creating bucket {}", event_class, event_config.topic )
+  _ds.storage.createBucket( event_config.topic, "dummy!", false )
+}
+_shared["EVENT_CONFIG"] = config // load it up
+_log.info("EVENT system booting complete!")

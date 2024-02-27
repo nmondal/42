@@ -28,7 +28,6 @@ routes:
 
 plugins:
   cowj.plugins:
-    mem-st: MemoryBackedStorage::STORAGE
     file-st: FileBackedStorage::STORAGE
     aws-s3:  S3StorageWrapper::STORAGE
     jdbc: JDBCWrapper::JDBC
@@ -55,6 +54,6 @@ data-sources:
 cron:
   # creates buckets if not created already , for prod, create bucket before hand
   boot-configure:
-    exec: _/cron.zm
+    exec: _/boot.zm
     boot: true
     at: "0 0 0 1 1 ? 2100"

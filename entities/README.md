@@ -54,10 +54,8 @@ curl -XPOST "localhost:4201/relate/r1" -d '{ "src" : "a:22FK3NEDvIc", "dst" : "a
 #### Removing 
 
 ```shell
-curl -XPOST "localhost:4201/relate/r1" -d '{ "src" : "a:22FK3NEDvIc", "dst" : "a:22FK3E8TtzC" , "author" : "a:admin" }' 
+curl -XPOST "localhost:4201/unrelate/r1" -d '{ "src" : "a:22FK3NEDvIc", "dst" : "a:22FK3E8TtzC" , "author" : "a:admin" }' 
 ```
-
-
 
 ## Design 
 

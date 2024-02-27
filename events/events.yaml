@@ -16,16 +16,16 @@ routes:
 
 plugins:
   cowj.plugins:
-    mem-st: MemoryBackedStorage::STORAGE
+    file-st: FileBackedStorage::STORAGE
     aws-s3:  S3StorageWrapper::STORAGE
     jdbc: JDBCWrapper::JDBC
     jvm-rama: JvmRAMA::RAMA
 
-
 data-sources:
   # to run locally - comment this to run in prod
   storage:
-    type: mem-st
+    type: file-st
+    mount-point: _/../data
 
   # to run in prod - comment other one and rename it to 'storage'
   prod-storage:
@@ -40,8 +40,14 @@ data-sources:
     uuid: "rama-42-0"
 
 cron:
-  # Universal Event Processor Cron
+  # creates buckets if not created already , for prod, create bucket before hand
   boot-configure:
+    exec: _/boot.zm
+    boot: true
+    at: "0 0 0 1 1 ? 2100"
+
+  # Universal Event Processor Cron
+  main-event-handler:
     exec: _/processors/main.zm
     boot: false
-    at: "0 */1 * * * *"
+    at: "0 0/1 * * * ?"

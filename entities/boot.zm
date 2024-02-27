@@ -1,6 +1,5 @@
 // Loads the configurations and keeps it handy 
 config = json(_/"config.json",true)
-// optional - create buckets TODO 
 for ( entity_class : config.entities.keys ){
   entity_config = config.entities[entity_class]
   _log.info("For {} Creating bucket {}", entity_class, entity_config.bucket )

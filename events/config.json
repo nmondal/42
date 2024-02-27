@@ -1,0 +1,10 @@
+{
+  "evt_1" : {
+    "$description" : "",
+    "topic" : "EVENT_1"
+  },
+  "evt_2" : {
+    "$description" : "",
+    "topic" : "EVENT_2"
+  }
+}
