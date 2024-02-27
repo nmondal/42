@@ -1,0 +1,13 @@
+def run_update_query( query_template, params ){
+    em = _ds.graph.update( query_template , params )
+    panic( em.inError, jstr( { "status" : false, "message" : em.error().getMessage() ?? "ok" } ) , 406 )
+    em.value() // return
+}
+
+def process_primitive_params( prop_map ){
+  items = select( prop_map.entries ) where {  !($.v isa 'list' || $.v isa 'map'  || $.v isa 'arr')  }
+  str( items, "," ) as {
+      need_no_escape = ($.v isa 'int' || $.v isa 'float' || $.v isa 'bool')
+      need_no_escape ? str("%s: %s", $.k, $.v) : str("%s: '%s'", $.k, $.v)  }
+  }
+}

@@ -18,5 +18,5 @@ result["message"] = em.isSuccessful() ? "ok" : em.error().getMessage()
 panic( em.inError, jstr( result ) , 406 )
 relation_urn = str( "%s-%s-%s", payload.src, relation_name, payload.dst )
 // just store author-ship
-_ds.storage.dump( RELATION_BUCKET, relation_urn, { "author": payload.author } )
+_ds.storage.dumps( RELATION_BUCKET, relation_urn, payload.author )
 result // return
