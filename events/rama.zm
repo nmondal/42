@@ -2,12 +2,12 @@
 EVENT_CONFIG = _shared["EVENT_CONFIG"]
 
 event_type = req.params("class")
-assert( event_type @ EVENT_CONFIG, jstr( {"success" : false, "message" : "event-class is not configured!" } ), 404 )
+assert( event_type @ EVENT_CONFIG, jstr( {"status" : false, "message" : "event-class is not configured!" } ), 404 )
 event_payload = req.attribute("_body") ?? json( req.body() )
-panic( empty( event_payload.entities ) , jstr( {"success" : false, "message" : "At least one entity must exist!" } ), 424 )
+panic( empty( event_payload.entities ) , jstr( {"status" : false, "message" : "At least one entity must exist!" } ), 424 )
 
 em = _ds.rama.put( EVENT_CONFIG[event_type]["topic"],  req.body() )
-panic( em.inError , jstr( {"success" : false, "message" : "Write Failed with Event Bus!" } ), 424 )
+panic( em.inError , jstr( {"status" : false, "message" : "Write Failed with Event Bus!" } ), 424 )
 
-jstr( {"success" : true, "message" : "ok" } )
+jstr( {"status" : true, "message" : "ok" } )
 

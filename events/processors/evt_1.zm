@@ -1,3 +1,1 @@
-def process_event(time_stamp){
-    _log.info("[evt_1] ts : {}", time_stamp )
-}
+_log.info("event: {}, body: {}", event, body)
