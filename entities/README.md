@@ -34,6 +34,20 @@ Produces:
 ```
 In case one needs to specify nested property, use `prop/nested` syntax. Read up in `JxPath`. 
 
+
+#### Read
+
+Simple RESTFUL:
+
+```shell
+curl "localhost:4201/entity/a:22G9ahiRr5m"
+```
+Produce the body as follows:
+
+```jsonc
+{"urn" : "a:22G9ahiRr5m", "author" : "a:admin" /*...other properties... */ }
+```
+
 ### Relations
 
 #### Adding 
