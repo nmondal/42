@@ -5,9 +5,9 @@
     "title": "Generic",
     "type": "object",
     "properties": {
-      "status": { "type": "boolean" },
+      "success": { "type": "boolean" },
       "message" : {"type": "string" }
     },
-    "required": ["status"],
+    "required": ["success"],
     "additionalProperties": true
 }

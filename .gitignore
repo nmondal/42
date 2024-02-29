@@ -10,6 +10,8 @@
 # Ide files and folders
 .vscode/
 .idea/
+data/
+jar-lib/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
