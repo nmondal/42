@@ -45,8 +45,12 @@ curl "localhost:4201/entity/a:22G9ahiRr5m"
 Produce the body as follows:
 
 ```jsonc
-{"urn" : "a:22G9ahiRr5m", "author" : "a:admin" /*...other properties... */ }
+{"urn" : "a:22G9ahiRr5m", "author" : "a:admin", 
+    "relations" : [ {"name" : "r1", "other" : "a:22G9YwF306J", "is_start" : true} ]
+   /*...other properties... */ 
+ }
 ```
+As one can see, it returns the relations too.
 
 ### Relations
 

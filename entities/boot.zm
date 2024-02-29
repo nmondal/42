@@ -14,6 +14,6 @@ _shared["ENTITIES"] = config.entities ?? {:} // done populating
 _shared["RELATIONS"] = config.relations ?? {:} // done populating
 
 _shared["CREATE"] = read( _/"cypher/insert.cypher" )
-//_shared["UPDATE"] = read( _/"update.cypher" ) TODO
+_shared["READ"]  = read( _/"cypher/read.cypher" )
 _shared["RELATE"] = read( _/"cypher/relate.cypher" )
 _shared["UNRELATE"] = read( _/"cypher/unrelate.cypher" )
