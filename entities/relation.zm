@@ -8,12 +8,12 @@ RELATION_BUCKET = "relations"
 // now proceed
 query_template =  ( req.pathInfo #^ "/relate/" ) ? _shared["RELATE"] : _shared["UNRELATE"]
 relation_name = req.params("relation")
-assert ( relation_name @ RELATION_CONFIG, jstr( { "status" : false, "message" : "relationship type is not configured!" } ), 404 )
+assert ( relation_name @ RELATION_CONFIG, jstr( { "success" : false, "message" : "relationship type is not configured!" } ), 404 )
 payload = req.attribute("_body") ?? json(req.body)
 
 params = { "e1" : payload.src , "e2" : payload.dst , "relation_name" : relation_name }
 em = _ds.graph.update( query_template , params )
-result = { "status" : em.isSuccessful() }
+result = { "success" : em.isSuccessful() }
 result["message"] = em.isSuccessful() ? "ok" : em.error().getMessage()
 panic( em.inError, jstr( result ) , 406 )
 relation_urn = str( "%s-%s-%s", payload.src, relation_name, payload.dst )
