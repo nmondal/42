@@ -33,21 +33,26 @@ data-sources:
     region-id: ap-southeast-1
     page-size: 500
 
-  # The graphdb stuff
+  # The event handling stuff
   rama:
     type: jvm-rama
     storage: storage
     uuid: "rama-42-0"
-
-cron:
-  # creates buckets if not created already , for prod, create bucket before hand
-  boot-configure:
-    exec: _/boot.zm
-    boot: true
-    at: "0 0 0 1 1 ? 2100"
-
-  # Universal Event Processor Cron
-  main-event-handler:
-    exec: _/processors/main.zm
-    boot: false
-    at: "0 0/1 * * * ?"
+    topics:
+      EVENT_1:
+        create: true
+        at: "0 0/1 * * * ?"
+        prefix: "yyyy/MM/dd/HH/mm"
+        offset: "PT-1M"
+        step: "PT1M"
+        page-size: 100
+        consumers: [ _/evt_1.zm ]
+      EVENT_2:
+        create: true
+        at: "0 */5 * * * ?"
+        prefix: "yyyy/MM/dd/HH/mm"
+        offset: "PT-5M"
+        step: "PT1M"
+        page-size: 100
+        consumers: [ _/evt_1.zm , _/evt_2.zm ]
+  # end game
