@@ -28,15 +28,15 @@ routes:
 
 plugins:
   cowj.plugins:
-    file-st: FileBackedStorage::STORAGE
+    versioned-file-st: VersionedFileStorage::STORAGE
     aws-s3:  S3StorageWrapper::STORAGE
     jdbc: JDBCWrapper::JDBC
 
 data-sources:
   # to run locally - comment this to run in prod
   storage:
-    type: file-st
-    mount-point: _/../data
+    type: versioned-file-st
+    mount-point: _/../data/journaled
 
   # to run in prod - comment other one and rename it to 'storage'
   prod-storage:

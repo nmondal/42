@@ -25,7 +25,7 @@ data-sources:
   # to run locally - comment this to run in prod
   storage:
     type: file-st
-    mount-point: _/../data
+    mount-point: _/../data/immutable
 
   # to run in prod - comment other one and rename it to 'storage'
   prod-storage:
