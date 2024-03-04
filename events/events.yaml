@@ -46,7 +46,7 @@ data-sources:
         offset: "PT-1M"
         step: "PT1M"
         page-size: 100
-        consumers: [ _/evt_1.zm ]
+        consumers: [ _/processors/evt_1.zm ]
       EVENT_2:
         create: true
         at: "0 */5 * * * ?"
@@ -54,5 +54,5 @@ data-sources:
         offset: "PT-5M"
         step: "PT1M"
         page-size: 100
-        consumers: [ _/evt_1.zm , _/evt_2.zm ]
+        consumers: [  _/processors/evt_1.zm ,  _/processors/evt_2.zm ]
   # end game

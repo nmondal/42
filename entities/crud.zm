@@ -47,6 +47,8 @@ def entity_update(){
    ctx = JX.newContext(cur_obj)
    apply_data = req.attribute("_body") ?? json(req.body)
    for ( entry : apply_data.apply.entries ){ ctx.setValue( entry.key, entry.value ) }
+   // update author of this revision
+   cur_obj.author = apply_data.author
    _ds.storage.dump( bucket, entity_id ,cur_obj)
    jstr( { "urn" : cur_obj.urn } ) // TODO get the version revision too
 }

@@ -6,8 +6,8 @@ assert( event_type @ EVENT_CONFIG, jstr( {"success" : false, "message" : "event-
 event_payload = req.attribute("_body") ?? json( req.body() )
 panic( empty( event_payload.entities ) , jstr( {"success" : false, "message" : "At least one entity must exist!" } ), 424 )
 
+// this is actual code in eventing
 em = _ds.rama.put( EVENT_CONFIG[event_type]["topic"],  req.body() )
 panic( em.inError , jstr( {"success" : false, "message" : "Write Failed with Event Bus!" } ), 424 )
-
 jstr( {"success" : true, "message" : "ok" } )
 
