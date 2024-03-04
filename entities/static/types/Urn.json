@@ -8,8 +8,13 @@
       "urn": {
         "type": "string",
         "pattern": "^[a-zA-Z]+\\:[a-zA-Z0-9]+$"
+      },
+      "version": { "type": "string" },
+      "versions": {
+        "type": "array",
+        "items": { "type": "string" }
       }
     },
     "required": ["urn"],
-    "additionalProperties": false
+    "additionalProperties": true
   }

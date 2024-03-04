@@ -1,0 +1,25 @@
+/* Entity End Point Handling */
+ENTITY_CONFIG = _shared["ENTITIES"]
+
+def all_versions(){
+    begin = req.queryParams("start") ?? 0
+    max = req.queryParams("max") ?? 30
+    versions = _ds.storage.listVersions( bucket, entity_id, begin, max )
+    panic( empty(versions), jstr( {"success" : false, "message" : "such a data version does not exist!" } ), 404 )
+    jstr( { "urn" : entity_urn , "versions" : versions } )
+}
+
+def at_version(){
+    ver_id = req.params("ver")
+    old_data = _ds.storage.dataAtVersion( bucket, entity_id, ver_id )
+    panic( empty(old_data), jstr( {"success" : false, "message" : "such a data version does not exist!" } ), 404 )
+    old_data isa 'str' ? old_data : _ds.storage.utf8( old_data )  // return the data
+}
+
+entity_urn = req.params("id")
+#(entity_class, entity_id) = entity_urn.split(":")
+assert( entity_class @ ENTITY_CONFIG, jstr( {"success" : false, "message" : "entity-class is not configured!" } ), 404 )
+bucket = ENTITY_CONFIG[entity_class]["bucket"]
+
+op_type = ( req.pathInfo #^ "/version/" )
+op_type ? at_version() : all_versions()

@@ -25,6 +25,8 @@ routes:
 
   get:
     /entity/:id : _/crud.zm
+    /version/:id/:ver : _/versions.zm
+    /versions/:id : _/versions.zm
 
 plugins:
   cowj.plugins:

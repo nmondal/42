@@ -38,3 +38,13 @@ routes:
       in: Relation.json
       ok: Generic.json
       err: Generic.json
+
+  /version/*:
+    get:
+      ok: Urn.json
+      err: Generic.json
+
+  /versions/*:
+    get:
+      ok: Entity.json
+      err: Generic.json
