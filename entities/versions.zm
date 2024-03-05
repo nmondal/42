@@ -18,9 +18,16 @@ def at_version(){
 }
 
 entity_urn = req.params("id")
-#(entity_class, entity_id) = entity_urn.split(":")
-assert( entity_class @ ENTITY_CONFIG, jstr( {"success" : false, "message" : "entity-class is not configured!" } ), 404 )
-bucket = ENTITY_CONFIG[entity_class]["bucket"]
-
+// in case it is of the form "aaa:xxx-bbb-yyy:zzz" it is relationship
+if ( "-" @ entity_urn ){
+    // this is relationships
+    #(bucket, entity_id) = [ "relations", entity_urn ]
+} else {
+    // this is proper entity
+    #(entity_class, entity_id) = entity_urn.split(":")
+    assert( entity_class @ ENTITY_CONFIG, jstr( {"success" : false, "message" : "entity-class is not configured!" } ), 404 )
+    bucket = ENTITY_CONFIG[entity_class]["bucket"]
+}
+// now process the stuff
 op_type = ( req.pathInfo #^ "/version/" )
 op_type ? at_version() : all_versions()

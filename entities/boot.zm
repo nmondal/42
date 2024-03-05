@@ -1,5 +1,6 @@
 // Loads the configurations and keeps it handy 
 config = json(_/"config.json",true)
+// creating bucket for each entities, if not already
 for ( entity_class : config.entities.keys ){
   entity_config = config.entities[entity_class]
   _log.info("For {} Creating bucket {}", entity_class, entity_config.bucket )
@@ -13,6 +14,7 @@ _ds.storage.createBucket( "relations", "dummy!", false )
 _shared["ENTITIES"] = config.entities ?? {:} // done populating
 _shared["RELATIONS"] = config.relations ?? {:} // done populating
 
+// add the queries to cache it through
 _shared["CREATE"] = read( _/"cypher/insert.cypher" )
 _shared["READ"]  = read( _/"cypher/read.cypher" )
 _shared["RELATE"] = read( _/"cypher/relate.cypher" )
