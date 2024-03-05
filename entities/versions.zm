@@ -11,9 +11,9 @@ def all_versions(){
 
 def at_version(){
     ver_id = req.params("ver")
-    old_data = _ds.storage.dataAtVersion( bucket, entity_id, ver_id )
-    panic( empty(old_data), jstr( {"success" : false, "message" : "such a data version does not exist!" } ), 404 )
-    old_data isa 'str' ? old_data : _ds.storage.utf8( old_data )  // return the data
+    old_string = _ds.storage.stringAtVersion( bucket, entity_id, ver_id ) // loads the string version of the data
+    panic( empty(old_string), jstr( {"success" : false, "message" : "such a data version does not exist!" } ), 404 )
+    old_string  // return the data
 }
 
 entity_urn = req.params("id")
