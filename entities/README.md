@@ -118,5 +118,52 @@ curl -XPOST "localhost:4201/relate/r1" -d '{ "src" : "a:22FK3NEDvIc", "dst" : "a
 curl -XPOST "localhost:4201/unrelate/r1" -d '{ "src" : "a:22FK3NEDvIc", "dst" : "a:22FK3E8TtzC" , "author" : "a:admin" }' 
 ```
 
-## Design 
+## Versioning 
 
+### All Versions
+
+syntax is:
+
+```shell
+curl "localhost:4201/versions/<entity_id>[?s=num][m=num]" 
+```
+
+
+```shell
+curl "localhost:4201/versions/a:22HNJHO2TAK" 
+```
+In case you want to gather versions which are from a specific one upto a max, the query params are supported:
+
+```
+s : Start Index for versions ( default 0 )
+m : Max no of versions to show ( default 32 )
+```
+For example this :
+
+```shell
+curl "localhost:4201/versions/a:22HNJHO2TAK?s=2&m=10" 
+```
+will fetch from the 3rd version, upto 10 more versions.
+In case of `relationships` use the urn as follows:
+
+```
+relation_urn : <src_entity_urn>-<relation_name>-<src_entity_urn>
+```
+Hence this is legitimate:
+
+```shell
+curl "localhost:4201/versions/a:22HjNStOGLg-r1-a:22HNJHO2TAK"
+```
+
+### Specific Version 
+
+Syntax is:
+
+```shell
+curl "localhost:4201/version/<entity_urn>/<entity_version>"
+```
+For example:
+
+```shell
+curl "localhost:4201/version/a:22HNJHO2TAK/22HNJHXEwNz"
+```
