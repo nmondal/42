@@ -2,8 +2,9 @@
 ENTITY_CONFIG = _shared["ENTITIES"]
 
 def all_versions(){
-    begin = req.queryParams("start") ?? 0
-    max = req.queryParams("max") ?? 30
+    begin = int ( req.queryParams("s") , 0 )
+    max = int ( req.queryParams("m") , 30 )
+    _log.info("urn : {}, begin:{}, max show:{}", entity_urn, begin, max )
     versions = _ds.storage.listVersions( bucket, entity_id, begin, max )
     panic( empty(versions), jstr( {"success" : false, "message" : "such a data version does not exist!" } ), 404 )
     jstr( { "urn" : entity_urn , "versions" : versions } )
