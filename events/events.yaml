@@ -40,7 +40,6 @@ data-sources:
     uuid: "rama-42-0"
     topics:
       EVENT_1:
-        create: true
         at: "0 0/1 * * * ?"
         prefix: "yyyy/MM/dd/HH/mm"
         offset: "PT-1M"
@@ -48,11 +47,16 @@ data-sources:
         page-size: 100
         consumers: [ _/processors/evt_1.zm ]
       EVENT_2:
-        create: true
         at: "0 */5 * * * ?"
         prefix: "yyyy/MM/dd/HH/mm"
         offset: "PT-5M"
         step: "PT1M"
         page-size: 100
         consumers: [  _/processors/evt_1.zm ,  _/processors/evt_2.zm ]
-  # end game
+
+cron:
+  # creates buckets if not created already , for prod, create bucket beforehand
+  boot-configure:
+    exec: _/boot.zm
+    boot: true
+    at: "0 0 0 1 1 ? 2100"
