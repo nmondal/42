@@ -46,5 +46,6 @@ routes:
 
   /versions/*:
     get:
+      params: PageParams.json
       ok: Entity.json
       err: Generic.json

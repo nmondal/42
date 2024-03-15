@@ -1,0 +1,12 @@
+{
+  "$id": "https://42.cowj/PageParams.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Schema for Pagination parameters in the Versions Get Path",
+  "title": "PageParams",
+  "type": "object",
+  "properties": {
+    "s" :   { "type" : "integer" , "minimum": 0 , "description": "starting offset for the versions"},
+    "m" :   { "type" : "integer" ,  "minimum": 1 , "description": "how many version numbers we want to get"}
+  },
+  "additionalProperties": false
+}
