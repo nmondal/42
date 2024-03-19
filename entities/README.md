@@ -144,6 +144,13 @@ For example this :
 curl "localhost:4201/versions/a:22HNJHO2TAK?s=2&m=10" 
 ```
 will fetch from the 3rd version, upto 10 more versions.
+List is sorted by recent versions first. So 
+
+1. to get the latest version use `&m=1`
+2. last but one version use `s=1&m=1`
+
+You can get the idea.
+
 In case of `relationships` use the urn as follows:
 
 ```
